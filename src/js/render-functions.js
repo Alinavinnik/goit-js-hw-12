@@ -22,11 +22,12 @@ export function createGallery(images) {
     return `<li class="photo-card">
               <a href=${largeImageURL}><img src="${webformatURL}" alt="${tags}"/></a>
 
-              <li class="info">
+              <div class="info">
               <div class="info-item"><h2>Likes: <span>${likes}</span></h2></div>
               <div class="info-item"> <h2>Views: <span>${views}</span></h2></div>
               <div class="info-item"><h2>Comments: <span>${comments}</span></h2></div>
               <div class="info-item"><h2>Downloads: <span>${downloads}</span></h2></div>
+            </div>
             </li>
             `;
   }
