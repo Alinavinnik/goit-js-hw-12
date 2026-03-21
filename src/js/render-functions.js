@@ -1,13 +1,5 @@
-import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
-const ulElem = document.querySelector('.gallery');
 const loader = document.querySelector('.loader');
-
-let lightbox = new SimpleLightbox('.gallery .photo-card a', {
-  captionsData: 'alt',
-  captionDelay: 250,
-});
-// створення розмітки
+export const ulElem = document.querySelector('.gallery');
 export function createGallery(images) {
   function imgTemplate(img) {
     const {
@@ -19,6 +11,7 @@ export function createGallery(images) {
       downloads,
       largeImageURL,
     } = img;
+
     return `<li class="photo-card">
               <a href=${largeImageURL}><img src="${webformatURL}" alt="${tags}"/></a>
 
@@ -31,12 +24,8 @@ export function createGallery(images) {
             </li>
             `;
   }
-  function imgsTemplate(imgs) {
-    return imgs.map(imgTemplate).join('');
-  }
-  const markup = imgsTemplate(images);
-  ulElem.innerHTML = markup;
-  lightbox.refresh();
+
+  return images.map(imgTemplate).join('');
 }
 
 export function clearGallery() {

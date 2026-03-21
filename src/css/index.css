@@ -16,7 +16,8 @@ input[name='search-text']:hover,
 input[name='search-text']:active {
   border: 1px solid #000000;
 }
-button[type='submit'] {
+.btn-search,
+.load {
   padding: 8px 16px;
   border: none;
   outline: none;
@@ -24,10 +25,17 @@ button[type='submit'] {
   background-color: #4e75ff;
   border-radius: 8px;
   transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: capitalize;
+}
+.load {
+  display: block;
+  margin: 0 auto;
 }
 
-button[type='submit']:hover,
-button[type='submit']:active {
+.btn-search:hover,
+.btn-search:active,
+.load:hover,
+.load:active {
   background-color: #6c8cff;
 }
 .gallery {

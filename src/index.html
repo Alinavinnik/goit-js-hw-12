@@ -10,22 +10,21 @@
     <link rel="stylesheet" href="./css/styles.css" />
   </head>
   <body>
-    <header class="header">
-      <div class="container">
-        <form class="form">
-          <label>
-            <input
-              type="text"
-              name="search-text"
-              placeholder="Search images..."
-              required
-            />
-          </label>
-          <button type="submit">Search</button>
-        </form>
-        <ul class="gallery"></ul>
-        <span class="loader is-hidden"></span>
-      </div>
+    <header class="header container">
+      <form class="form">
+        <label>
+          <input
+            type="text"
+            name="search-text"
+            placeholder="search images..."
+            required
+          />
+        </label>
+        <button class="btn-search" type="submit">Search</button>
+      </form>
+      <ul class="gallery"></ul>
+      <span class="loader is-hidden"></span>
+      <button class="load is-hidden" type="submit">load more</button>
     </header>
     <script type="module" src="./main.js"></script>
   </body>
