@@ -46,11 +46,12 @@ async function handleFormSubmit(e) {
       return;
     }
     createGallery(res.hits);
+
+    checkLastPage();
   } catch (error) {
     console.log(error);
     showMessage('Something went wrong!');
   } finally {
-    checkLastPage();
     hideLoader();
     form.reset();
   }
@@ -69,12 +70,12 @@ async function handleBtnLoadSubmit(e) {
     const res = await getImagesByQuery(searchText, page);
     createGallery(res.hits);
     scrollPage();
+    checkLastPage();
   } catch (error) {
     hideLoader();
     showMessage('Something went wrong!');
   } finally {
     hideLoader();
-    checkLastPage();
   }
 }
 
@@ -88,6 +89,7 @@ function scrollPage() {
 }
 
 function checkLastPage() {
+  if (!totalPages) return;
   if (page >= totalPages) {
     showMessage(`We're sorry, but you've reached the end of search results.`);
     hideLoadBtn();
