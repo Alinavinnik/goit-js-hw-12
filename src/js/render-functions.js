@@ -1,5 +1,11 @@
 const loader = document.querySelector('.loader');
 export const ulElem = document.querySelector('.gallery');
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+let lightbox = new SimpleLightbox('.gallery .photo-card a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
 export function createGallery(images) {
   function imgTemplate(img) {
     const {
@@ -25,7 +31,12 @@ export function createGallery(images) {
             `;
   }
 
-  return images.map(imgTemplate).join('');
+  function imgsTemplate(imgs) {
+    return imgs.map(imgTemplate).join('');
+  }
+  const markup = imgsTemplate(images);
+  ulElem.innerHTML = markup;
+  lightbox.refresh();
 }
 
 export function clearGallery() {
@@ -36,4 +47,27 @@ export function showLoader() {
 }
 export function hideLoader() {
   loader.classList.add('is-hidden');
+}
+
+export function showLoadBtn() {
+  btnLoad.classList.remove('is-hidden');
+}
+export function hideLoadBtn() {
+  btnLoad.classList.add('is-hidden');
+}
+
+export function checkLastPage() {
+  if (page >= totalPages) {
+    showMessage(`We're sorry, but you've reached the end of search results.`);
+    hideLoadBtn();
+  }
+}
+
+export function showMessage(message) {
+  iziToast.show({
+    message: message,
+    position: 'topRight',
+    backgroundColor: 'rgba(232, 13, 13, 0.8)',
+    messageColor: 'white',
+  });
 }
