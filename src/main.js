@@ -37,12 +37,12 @@ async function handleFormSubmit(e) {
     showMessage('Please enter a search term');
     return;
   }
-
+  page = 1;
   clearGallery();
   showLoader();
 
   try {
-    const res = await getImagesByQuery(searchText, 1);
+    const res = await getImagesByQuery(searchText, page);
     totalPages = Math.ceil(res.totalHits / perPage);
     if (!res.hits.length) {
       hideLoader();
@@ -50,9 +50,11 @@ async function handleFormSubmit(e) {
       showMessage(
         `Sorry, there are no images matching your search query.Please try again!`
       );
+      return;
     }
     const markup = createGallery(res.hits);
     ulElem.innerHTML = markup;
+    checkLastPage();
     lightbox.refresh();
   } catch (error) {
     hideLoader();
@@ -61,24 +63,24 @@ async function handleFormSubmit(e) {
 
     showMessage('Something went wrong!');
   }
-  checkLastPage();
+
   hideLoader();
   form.reset();
 }
-//! ========================================message text
+//! ========================================
 
 btnLoad.addEventListener('click', handleBtnLoadSubmit);
 
 async function handleBtnLoadSubmit(e) {
   e.preventDefault();
-  page++;
-
-  checkLastPage();
+  page += 1;
   try {
     const result = await getImagesByQuery(searchText, page);
     const markup = createGallery(result.hits);
     ulElem.insertAdjacentHTML('beforeend', markup);
     lightbox.refresh();
+    checkLastPage();
+    scrollPage();
   } catch (error) {
     hideLoader();
     showMessage('Something went wrong!');
@@ -110,4 +112,13 @@ function showLoadBtn() {
 }
 function hideLoadBtn() {
   btnLoad.classList.add('is-hidden');
+}
+
+function scrollPage() {
+  const cardElem = document.querySelector('.photo-card');
+  const heightCard = cardElem.getBoundingClientRect().height;
+  window.scrollBy({
+    top: heightCard * 3,
+    behavior: 'smooth',
+  });
 }
