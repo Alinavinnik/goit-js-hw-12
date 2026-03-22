@@ -56,13 +56,6 @@ export function hideLoadBtn() {
   btnLoad.classList.add('is-hidden');
 }
 
-export function checkLastPage() {
-  if (page >= totalPages) {
-    showMessage(`We're sorry, but you've reached the end of search results.`);
-    hideLoadBtn();
-  }
-}
-
 export function showMessage(message) {
   iziToast.show({
     message: message,

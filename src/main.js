@@ -6,7 +6,6 @@ import {
   hideLoader,
   showLoadBtn,
   hideLoadBtn,
-  checkLastPage,
   showMessage,
 } from './js/render-functions';
 import iziToast from 'izitoast';
@@ -31,12 +30,12 @@ async function handleFormSubmit(e) {
   showLoader();
   if (searchText === '') {
     showMessage('Please enter a search term');
+    hideLoader();
     return;
   }
   page = 1;
   clearGallery();
-  showLoader();
-
+  hideLoadBtn();
   try {
     const res = await getImagesByQuery(searchText, page);
     totalPages = Math.ceil(res.totalHits / perPage);
@@ -68,6 +67,7 @@ async function handleBtnLoadSubmit(e) {
     const res = await getImagesByQuery(searchText, page);
     createGallery(res.hits);
     checkLastPage();
+    showLoadBtn();
     scrollPage();
   } catch (error) {
     hideLoader();
@@ -84,4 +84,11 @@ function scrollPage() {
     top: heightCard * 2,
     behavior: 'smooth',
   });
+}
+
+function checkLastPage() {
+  if (page >= totalPages) {
+    showMessage(`We're sorry, but you've reached the end of search results.`);
+    hideLoadBtn();
+  }
 }
