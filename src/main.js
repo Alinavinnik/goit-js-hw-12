@@ -27,14 +27,14 @@ async function handleFormSubmit(e) {
 
   const formData = new FormData(form);
   searchText = formData.get('search-text').trim();
-  showLoader();
+
   if (searchText === '') {
     showMessage('Please enter a search term');
-    hideLoader();
     return;
   }
   page = 1;
   clearGallery();
+  showLoader();
   hideLoadBtn();
   try {
     const res = await getImagesByQuery(searchText, page);
@@ -46,12 +46,11 @@ async function handleFormSubmit(e) {
       return;
     }
     createGallery(res.hits);
-    checkLastPage();
-    showLoadBtn();
   } catch (error) {
     console.log(error);
     showMessage('Something went wrong!');
   } finally {
+    checkLastPage();
     hideLoader();
     form.reset();
   }
@@ -62,19 +61,21 @@ btnLoad.addEventListener('click', handleBtnLoadSubmit);
 
 async function handleBtnLoadSubmit(e) {
   e.preventDefault();
+
   page += 1;
+  showLoader();
+  hideLoadBtn();
   try {
     const res = await getImagesByQuery(searchText, page);
     createGallery(res.hits);
-    checkLastPage();
-    showLoadBtn();
     scrollPage();
   } catch (error) {
     hideLoader();
     showMessage('Something went wrong!');
+  } finally {
+    hideLoader();
+    checkLastPage();
   }
-
-  hideLoader();
 }
 
 function scrollPage() {
@@ -90,5 +91,7 @@ function checkLastPage() {
   if (page >= totalPages) {
     showMessage(`We're sorry, but you've reached the end of search results.`);
     hideLoadBtn();
+  } else {
+    showLoadBtn();
   }
 }
