@@ -2,6 +2,9 @@ const loader = document.querySelector('.loader');
 export const ulElem = document.querySelector('.gallery');
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
+import { btnLoad } from '../main';
+import iziToast from 'izitoast';
+import 'izitoast/dist/css/iziToast.min.css';
 let lightbox = new SimpleLightbox('.gallery .photo-card a', {
   captionsData: 'alt',
   captionDelay: 250,
@@ -35,7 +38,7 @@ export function createGallery(images) {
     return imgs.map(imgTemplate).join('');
   }
   const markup = imgsTemplate(images);
-  ulElem.innerHTML = markup;
+  ulElem.insertAdjacentHTML('beforeend', markup);
   lightbox.refresh();
 }
 

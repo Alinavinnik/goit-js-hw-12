@@ -8,11 +8,9 @@ import {
   hideLoadBtn,
   showMessage,
 } from './js/render-functions';
-import iziToast from 'izitoast';
-import 'izitoast/dist/css/iziToast.min.css';
 
 const form = document.querySelector('.form');
-const btnLoad = document.querySelector('.load');
+export const btnLoad = document.querySelector('.load');
 
 const perPage = 15;
 let page;
